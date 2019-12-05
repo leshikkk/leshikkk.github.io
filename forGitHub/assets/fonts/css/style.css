@@ -223,7 +223,7 @@ h2.h2-header{
    display: flex; 
    flex-direction: row;
    flex:0 0 auto;
-   justify-content: space-between;
+   justify-content: space-around;
 }
 .footer-text{
    display: flex;
@@ -239,7 +239,11 @@ a:{
    color: #86878b;
 }
 a:hover{
-color:white; 
-   transition: margin-left 1s, color 1.2s;
-   transform: scale(2.6,2.6);
-   }
+color:white;  
+   font-size: 30px;
+   transition-timing-function: 2s;
+
+}
+.transition {
+  transition: 2s;
+}
