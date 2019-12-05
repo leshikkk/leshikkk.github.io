@@ -25,6 +25,9 @@ body{
    border-style: solid;
 
 }
+h3{
+   font-family: "Open Sans";
+}
 h2.h2-header{
    margin:0 auto;
    padding-top: 80px;
