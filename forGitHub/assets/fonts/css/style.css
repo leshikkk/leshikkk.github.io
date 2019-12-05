@@ -9,6 +9,21 @@ end setting block = /settings for feature sections
 
 /* public settings */
 @import url(fontawesome.css);
+.mw{
+   max-width: 1400px;
+   margin: 0 auto;
+}
+
+.test {
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+   text-align: center;
+   margin:0 auto;
+
+
+}
+
 body{
    margin: 0 auto;
 }
@@ -232,6 +247,7 @@ h2.h2-header{
    display: flex;
    align-items: : flex-end;
    font-weight: 400;
+   font-family: "Open Sans";
    margin: 30px auto 0;
    position: absolute;
 }
