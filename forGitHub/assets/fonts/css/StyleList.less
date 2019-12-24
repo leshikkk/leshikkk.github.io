@@ -1,0 +1,25 @@
+@color_green:green;
+@color_red: red;
+@padding:5px ;
+
+.no_bullet{list-style-type:none;}
+ul{
+   .no_bullet;
+    ul~li:{padding: @padding;}
+    
+     ul~li:last-child {
+      color: @color_red;
+   }
+
+   li{
+      .no_bullet;
+      color:color_green;
+      padding: @padding;
+   }
+ 
+   }
+   li:first-child{
+      color: @color_green;
+   }
+}
+
