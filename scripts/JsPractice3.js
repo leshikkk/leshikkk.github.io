@@ -6,10 +6,8 @@ if(result) {
    alert(`Поздравляем, вам ${result} полных лет`);
    if(result>18) {
       alert("Поздравляем, вы уже совершеннолетний пользователь");
-      let qwer = "";
    }
-} else {
-  /* действия */ 
 }
+  
 }
 document.getElementById('jsPractice3').addEventListener('click', jsPractice3);

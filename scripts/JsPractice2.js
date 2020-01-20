@@ -1,4 +1,3 @@
-
 function jsPractice2() {
     var varNumber = 12;
     var varString = "Lorem ipsum dolor.";

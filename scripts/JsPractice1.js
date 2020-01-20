@@ -1,4 +1,3 @@
-
 function jsPractice1() {
    var stringVar = "Lorem ipsum dolor sit amet.";
    alert(stringVar);
