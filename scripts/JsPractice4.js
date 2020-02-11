@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 function jsPractice4() {
-    var result;
+    let result;
 
     function ucFirst(str) {
         if (str === false) return str;
@@ -9,7 +9,7 @@ function jsPractice4() {
         return result;
     }
 
-    var data = [
+    let data = [
         {
             firstName: 'Ashton',
             lastName: 'Kutcher',
@@ -25,7 +25,7 @@ function jsPractice4() {
         }
     ];
 
-    var str = prompt("Введите фамилию для поиска");
+    let str = prompt("Введите фамилию для поиска");
 
     ucFirst(str);
     str = result;
