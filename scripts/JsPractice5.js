@@ -256,9 +256,9 @@ function createResetBtn(){
     btnReset.id = "btnResetSumForm";
     btnReset.addEventListener("click", (e) => {
         toggleHiddingDiv();
-        let btnResetParentElem = document.getElementById("displaySum").parentElement;//получаем родителя(тег main)
-        while (btnResetParentElem.childElementCount > 2){//жёсткий костыль наверное, так как я не понял как убрать элементы кроме первых двух(инпут и лэйб = дисплей с суммой)
-            btnResetParentElem.removeChild(btnResetParentElem.lastElementChild);
+        let btnResetElem = document.getElementById("sectionsBtn");//получаем родителя(тег main)
+        while (btnResetElem.childElementCount){//жёсткий костыль наверное, так как я не понял как убрать элементы кроме первых двух(инпут и лэйб = дисплей с суммой)
+            btnResetElem.removeChild(btnResetElem.lastElementChild);
         }
     });
 
