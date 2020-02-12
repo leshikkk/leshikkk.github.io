@@ -199,68 +199,89 @@ function getSumPage() {
 
 }
 
-
-
-document.getElementById("btnGenerateOtherBtn").addEventListener("click", (e) => {
-    const countGenerateButton = document.getElementById("CountNewBtnOnDisplay").value;//получаем размерность кнопок
+function checkCountOtherBtn(countGenerateButton){
     //валидация введённого значения для размерности массива
     if (!countGenerateButton || countGenerateButton > 20) { // я так и не сообразил как ограничить по другому
-
         alert("Pls, enter a correct number value , again ");
         document.getElementById("displaySum").addEventListener("click", (e) => {
-            e.stopPropagation();//останавливаем событие если ввели размерность больше 20 или не ввели ничего 
-        });
-
-    } else {
-
-        document.getElementById("CountNewBtnOnDisplay").parentElement.hidden = true;//скрываем эту форму, чтобы перейти на второй див
-
-        let displaySum = document.getElementById("displaySum");
-        displaySum.parentElement.hidden = false;//открываем  форму с кнопками и дисплем суммы , вместо формы для генерации размерности кнопок
-        displaySum.value = 0;
-
-        const allAppChild = document.createDocumentFragment();//создаём фрагемент, т.к. нам придётся много пушить в DOM
-        allAppChild.appendChild(document.createElement("br"));// создаём чтобы кнопки не лезли друг на друга(костыль)
-        
-        for (let i = 0; i < countGenerateButton; i++) {
-            const btnIncr = document.createElement('button');//создаём кнопки с инкриментом 
-            btnIncr.textContent = `+${i + 1}`;
-            btnIncr.value = i + 1;
-            btnIncr.addEventListener("click", (e) => {
-                displaySum.value = Number(e.target.value) + Number(displaySum.value);
-            });//выше, собственно мы плюсуем(возможно это костыль через Number(), если да, то напииши как будет правильнее 
-            allAppChild.appendChild(btnIncr);//пушим в фрагмент(не DOM)
-            //дальше делаем то же самое , для кнопок с декриментом
-            const btnDecr = document.createElement("button");
-            btnDecr.textContent = `-${i + 1}`;
-            btnDecr.value = i + 1;
-            btnDecr.addEventListener("click", (e) => {
-                displaySum.value = Number(displaySum.value) - Number(e.target.value);
-            });
-            allAppChild.appendChild(btnDecr);
-            allAppChild.appendChild(document.createElement("br"));//создаём чтобы кнопки не лезли друг на друга(костыль)
+            e.stopPropagation();//останавливаем событие если ввели размерность больше 20 или не ввели ничего
+            countGenerateButton = null;
+        })}
+        else{
+            return countGenerateButton;
         }
-        //создаём кнопку для возврата в исходное состояние и перехода на первую форму, которая задаёт кол-во кнопок
-        const btnReset = document.createElement("button");
-        btnReset.textContent = "Reset";
-        btnReset.id = "btnResetSumForm";
-        btnReset.addEventListener("click", (e) => {
+}
+function toggleHiddingDiv(){
+    let checkHidden1 = document.getElementById("formForGenerate").hasAttribute("hidden");
+        if (checkHidden1) {
+            document.getElementById("formForGenerate").removeAttribute("hidden");
+            document.getElementById("CountNewBtnOnDisplay").focus();
+        }else {
+            document.getElementById("formForGenerate").setAttribute("hidden", "hidden");
+        }
 
-            let btnResetParentElem = document.getElementById("displaySum").parentElement;//получаем родителя(тег main)
-            document.getElementById("displaySum").parentElement.hidden = true;//скрываем эту форму, т.к. чуть ниже откроем форму для генерации
+    let checkHidden2 = document.getElementById("main").hasAttribute("hidden");
+        if (checkHidden2) {
+            document.getElementById("main").removeAttribute("hidden");
+            document.getElementById("sectionsBtn").removeAttribute("hidden");
 
-            while (btnResetParentElem.childElementCount > 2){//жёсткий костыль наверное, так как я не понял как убрать элементы кроме первых двух(инпут и лэйб = дисплей с суммой)
-                btnResetParentElem.removeChild(btnResetParentElem.lastElementChild);
+        }else {
+            document.getElementById("main").setAttribute("hidden", "hidden");
+            document.getElementById("sectionsBtn").setAttribute("hidden", "hidden");
+        }
+}
+function createListBtn(countBtn){
+    const allAppChild = document.createDocumentFragment();//создаём фрагемент, т.к. нам придётся много пушить в DOM
+    for (let i = 0; i < countBtn; i++) {
+        const btnIncr = document.createElement('button');//создаём кнопки с инкриментом
+        btnIncr.textContent = `+${i + 1}`;
+        btnIncr.value = i + 1;
+        btnIncr.setAttribute("data-value-sign","+");
+        allAppChild.appendChild(btnIncr);//пушим в фрагмент(не DOM)
+        //дальше делаем то же самое , для кнопок с декриментом
+        const btnDecr = document.createElement("button");
+        btnDecr.textContent = `-${i + 1}`;
+        btnDecr.value = i + 1;
+        btnDecr.setAttribute("data-value-sign","-");
+        allAppChild.appendChild(btnDecr);
+        allAppChild.appendChild(document.createElement("br"));//создаём чтобы кнопки не лезли друг на друга(костыль)        allAppChild.appendChild(btnReset);
+        document.getElementById("sectionsBtn").appendChild(allAppChild);// пушим всё в DOM
+
+    }
+}
+function createResetBtn(){
+    //создаём кнопку для возврата в исходное состояние и перехода на первую форму, которая задаёт кол-во кнопок
+    const btnReset = document.createElement("button");
+    btnReset.textContent = "Reset";
+    btnReset.id = "btnResetSumForm";
+    btnReset.addEventListener("click", (e) => {
+        toggleHiddingDiv();
+        let btnResetParentElem = document.getElementById("displaySum").parentElement;//получаем родителя(тег main)
+        while (btnResetParentElem.childElementCount > 2){//жёсткий костыль наверное, так как я не понял как убрать элементы кроме первых двух(инпут и лэйб = дисплей с суммой)
+            btnResetParentElem.removeChild(btnResetParentElem.lastElementChild);
+        }
+    });
+
+    document.getElementById("sectionsBtn").appendChild(btnReset);// пушим всё в DOM
+}
+
+    document.getElementById("btnGenerateOtherBtn").addEventListener("click", (e) => {
+    let countGenerateButton = document.getElementById("CountNewBtnOnDisplay").value;//получаем размерность кнопок
+    checkCountOtherBtn(countGenerateButton);
+    if (countGenerateButton){
+        toggleHiddingDiv();
+        createListBtn(countGenerateButton);
+        createResetBtn();
+
+        document.getElementById("sectionsBtn").addEventListener("click",(e)=>{
+            let displaySum = document.getElementById("displaySum");
+            if (e.target.dataset.valueSign === "+"){
+                displaySum.value = Number(displaySum.value) + Number(e.target.value);
+            }else{
+                displaySum.value = Number(displaySum.value) - Number(e.target.value);
             }
-
-            let CountNewBtnOnDisplay = document.getElementById("CountNewBtnOnDisplay");//получаем дисплей  для генерации кол-во кнопок
-            CountNewBtnOnDisplay.parentElement.hidden = false;//выводим на экран наш дисплей
-            CountNewBtnOnDisplay.value = "";
-            CountNewBtnOnDisplay.focus();// проставляем фокус для удобства
-
         });
-        allAppChild.appendChild(btnReset);
-        document.getElementById("main").appendChild(allAppChild);// пушим всё в DOM
+
     }
 
 });

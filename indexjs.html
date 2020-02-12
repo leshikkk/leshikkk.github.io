@@ -3,6 +3,16 @@
 <head>
    <meta charset="UTF-8">
    <title>test</title>
+   <style>
+   DIV{
+      width: 160px;
+   }
+    BUTTON{
+       width:50%;
+    } BUTTON#btnResetSumForm{
+       width:100%;
+    }
+   </style>
 </head>
 <body>
    <ul>
@@ -25,15 +35,16 @@
 <!--   <ul id = "list"></ul>
    <input type="button" onclick="testEventFunctions()" value="testEvents">
    <ul id ="testList"></ul>-->
-   <div>
+   <div id = "formForGenerate">
       <input type="number" id="CountNewBtnOnDisplay"  value="0" />
       <button id ="btnGenerateOtherBtn">Generate</button>
    </div>
 
-   <div id="main" hidden>
+   <div id="main" hidden="hidden">
       <label for="displaySum">Display:</label>
-      <input type="text" id="displaySum" value="0">
+      <input type="text" id="displaySum" value="0" disabled>
    </div>
+   <div id="sectionsBtn" ></div>
 
 
    <script src="scripts/JsPractice1.js"></script>
