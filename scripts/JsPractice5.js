@@ -199,91 +199,100 @@ function getSumPage() {
 
 }
 
-function checkCountOtherBtn(countGenerateButton){
-    //валидация введённого значения для размерности массива
-    if (!countGenerateButton || countGenerateButton > 20) { // я так и не сообразил как ограничить по другому
+
+function createDisplaySum() {
+    const displaySum = document.createElement('input');
+    displaySum.setAttribute("type", "text");
+    displaySum.setAttribute("disabled", "disabled");
+    displaySum.setAttribute("value", "0");
+    displaySum.setAttribute("id", "displaySum");
+    document.getElementById("formForGenerate").appendChild(displaySum);
+}
+
+function checkCountOtherBtn(countGenerateButton) {
+
+    if (!countGenerateButton || countGenerateButton > 20) {
         alert("Pls, enter a correct number value , again ");
         document.getElementById("displaySum").addEventListener("click", (e) => {
-            e.stopPropagation();//останавливаем событие если ввели размерность больше 20 или не ввели ничего
+            e.stopPropagation();
             countGenerateButton = null;
-        })}
-        else{
-            return countGenerateButton;
-        }
+        })
+    } else {
+        return countGenerateButton;
+    }
 }
-function toggleHiddingDiv(){
-    let checkHidden1 = document.getElementById("formForGenerate").hasAttribute("hidden");
-        if (checkHidden1) {
-            document.getElementById("formForGenerate").removeAttribute("hidden");
-            document.getElementById("CountNewBtnOnDisplay").focus();
-        }else {
-            document.getElementById("formForGenerate").setAttribute("hidden", "hidden");
-        }
 
-    let checkHidden2 = document.getElementById("main").hasAttribute("hidden");
-        if (checkHidden2) {
-            document.getElementById("main").removeAttribute("hidden");
-            document.getElementById("sectionsBtn").removeAttribute("hidden");
+function createListBtn(countBtn) {
+    const allAppChild = document.createDocumentFragment();
 
-        }else {
-            document.getElementById("main").setAttribute("hidden", "hidden");
-            document.getElementById("sectionsBtn").setAttribute("hidden", "hidden");
-        }
-}
-function createListBtn(countBtn){
-    const allAppChild = document.createDocumentFragment();//создаём фрагемент, т.к. нам придётся много пушить в DOM
     for (let i = 0; i < countBtn; i++) {
-        const btnIncr = document.createElement('button');//создаём кнопки с инкриментом
-        btnIncr.textContent = `+${i + 1}`;
-        btnIncr.value = i + 1;
-        btnIncr.setAttribute("data-value-sign","+");
-        allAppChild.appendChild(btnIncr);//пушим в фрагмент(не DOM)
-        //дальше делаем то же самое , для кнопок с декриментом
+        const btnIncr = document.createElement('button');
+              btnIncr.textContent = `+${i + 1}`;
+              btnIncr.value = i + 1;
+              btnIncr.setAttribute("data-value-sign", "+");
+              allAppChild.appendChild(btnIncr);
         const btnDecr = document.createElement("button");
-        btnDecr.textContent = `-${i + 1}`;
-        btnDecr.value = i + 1;
-        btnDecr.setAttribute("data-value-sign","-");
-        allAppChild.appendChild(btnDecr);
-        allAppChild.appendChild(document.createElement("br"));//создаём чтобы кнопки не лезли друг на друга(костыль)        allAppChild.appendChild(btnReset);
-        document.getElementById("sectionsBtn").appendChild(allAppChild);// пушим всё в DOM
-
+              btnDecr.textContent = `-${i + 1}`;
+              btnDecr.value = i + 1;
+              btnDecr.setAttribute("data-value-sign", "-");
+              allAppChild.appendChild(btnDecr);
+              allAppChild.appendChild(document.createElement("br"));
+              document.getElementById("formForGenerate").appendChild(allAppChild);
     }
+
 }
-function createResetBtn(){
-    //создаём кнопку для возврата в исходное состояние и перехода на первую форму, которая задаёт кол-во кнопок
+
+function createResetBtn() {
     const btnReset = document.createElement("button");
-    btnReset.textContent = "Reset";
-    btnReset.id = "btnResetSumForm";
-    btnReset.addEventListener("click", (e) => {
-        toggleHiddingDiv();
-        let btnResetElem = document.getElementById("sectionsBtn");//получаем родителя(тег main)
-        while (btnResetElem.childElementCount){//жёсткий костыль наверное, так как я не понял как убрать элементы кроме первых двух(инпут и лэйб = дисплей с суммой)
-            btnResetElem.removeChild(btnResetElem.lastElementChild);
-        }
-    });
-
-    document.getElementById("sectionsBtn").appendChild(btnReset);// пушим всё в DOM
+          btnReset.textContent = "Reset";
+          btnReset.id = "btnResetSumForm";
+          document.getElementById("formForGenerate").appendChild(btnReset);
 }
 
-    document.getElementById("btnGenerateOtherBtn").addEventListener("click", (e) => {
-    let countGenerateButton = document.getElementById("CountNewBtnOnDisplay").value;//получаем размерность кнопок
-    checkCountOtherBtn(countGenerateButton);
-    if (countGenerateButton){
-        toggleHiddingDiv();
-        createListBtn(countGenerateButton);
-        createResetBtn();
+function createGenerationForm() {
+    let countNewBtnOnDisplay = document.createElement("input");
+        countNewBtnOnDisplay.id = "countNewBtnOnDisplay";
+        countNewBtnOnDisplay.setAttribute("type", "number");
+        countNewBtnOnDisplay.setAttribute("value", "0");
+        document.getElementById("formForGenerate").appendChild(countNewBtnOnDisplay);
+    let btnGenerateOtherBtn = document.createElement("button");
+        btnGenerateOtherBtn.textContent = "Generate";
+        btnGenerateOtherBtn.id = "btnGenerateOtherBtn";
+        document.getElementById("formForGenerate").appendChild(btnGenerateOtherBtn);
+}
 
-        document.getElementById("sectionsBtn").addEventListener("click",(e)=>{
-            let displaySum = document.getElementById("displaySum");
-            if (e.target.dataset.valueSign === "+"){
-                displaySum.value = Number(displaySum.value) + Number(e.target.value);
-            }else{
-                displaySum.value = Number(displaySum.value) - Number(e.target.value);
-            }
-        });
+
+document.getElementById("formForGenerate").addEventListener("click", (e) => {
+    let displaySum = document.getElementById("displaySum");
+    let btnGenerateOtherBtn = document.getElementById("btnGenerateOtherBtn");
+    let btnResetSumForm = document.getElementById("btnResetSumForm");
+    let countGenerateButton = document.getElementById("countNewBtnOnDisplay").value;
+    if (displaySum !== null) {
+        if (e.target.dataset.valueSign === "+") {
+            displaySum.value = Number(displaySum.value) + Number(e.target.value);
+        } else {
+            displaySum.value = Number(displaySum.value) - Number(e.target.value);
+        }
+    }
+    switch (e.target.id) {
+
+        case ("btnGenerateOtherBtn"):
+            checkCountOtherBtn(countGenerateButton);
+            document.getElementById("formForGenerate").innerHTML = "";
+            createDisplaySum();
+            createListBtn(countGenerateButton);
+            createResetBtn();
+            break;
+
+        case("btnResetSumForm"):
+            document.getElementById("formForGenerate").innerHTML = "";
+            createGenerationForm();
+            break;
+
+        default:
+            break;
 
     }
-
 });
 
 document.getElementById('jsPractice5').addEventListener('click', jsPractice5);
