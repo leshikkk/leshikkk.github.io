@@ -3,6 +3,16 @@
 <head>
    <meta charset="UTF-8">
    <title>test</title>
+   <style>
+   DIV{
+      width: 160px;
+   }
+    BUTTON{
+       width:50%;
+    } BUTTON#btnResetSumForm{
+       width:100%;
+    }
+   </style>
 </head>
 <body>
    <ul>
@@ -10,11 +20,27 @@
       <li id="jsPractice2">JsPractice2</li>
       <li id="jsPractice3">JsPractice3</li>
       <li id="jsPractice4">JsPractice4</li>
+      <li id="jsPractice5">Палиндром</li>
+      <li id="jsPractice6">Массив с unique</li>
+      <li id="jsPractice7">Массив с unique и заменой zero</li>
+      <li id="getFizzBuzz">Массив с fizzbuzz</li>
+      <li id="getAnagram">Аннаграмы </li>
+      <li id="getFibonacci">Фибоначи Бине</li>
+      <li id="getFibonacci2">Фибоначи Рекурсия</li>
+      <li id="getSumPage">Сумма нумераций в книге</li>
    </ul>
-<script src="scripts/JsPractice1.js"></script>
-<script src="scripts/JsPractice2.js"></script>
-<script src="scripts/JsPractice3.js"></script>
-<script src="scripts/JsPractice4.js"></script>
+   <hr>
+   <input type="button" onclick="getFizzBuzz()" value="Запустить FizzBuzz">
+   <br>
+   <div id = "formForGenerate">
+      <input type="number" id="countNewBtnOnDisplay"  value="0" />
+      <button id ="btnGenerateOtherBtn">Generate</button>
+   </div>
+   <script src="scripts/JsPractice1.js"></script>
+   <script src="scripts/JsPractice2.js"></script>
+   <script src="scripts/JsPractice3.js"></script>
+   <script src="scripts/JsPractice4.js"></script>
+   <script src="scripts/JsPractice5.js"></script>
 </body>
 
 </html>
